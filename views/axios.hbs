@@ -1,0 +1,28 @@
+<!doctype html>
+<html>
+  <head>
+    <title>API App</title>
+  </head>
+  <body>
+    <h1>API App</h1>
+    <p id="temp"></p>
+    <script src="/axios/axios.js"></script>
+    <script>
+      var lat;
+      var long;
+      
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(function(position) {
+            lat = position.coords.latitude.toFixed(4);
+            long = position.coords.longitude.toFixed(4);
+            axios.get('/api/' + lat +'/' + long)
+              .then(function(response){
+                console.log(response.data);
+                var t = document.getElementById('temp');
+                t.innerHTML = response.data.currently.temperature;
+              });
+          });
+      }
+    </script>
+  </body>
+</html>
